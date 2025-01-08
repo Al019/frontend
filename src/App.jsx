@@ -11,6 +11,8 @@ import Credential from "./pages/default/admin/credentials/Credential"
 import Purpose from "./pages/default/admin/credentials/Purpose"
 import Requirement from "./pages/default/admin/documents/Requirement"
 import SoftCopy from "./pages/default/admin/documents/SoftCopy"
+import Request from "./pages/default/admin/credentials/Request"
+import RequestDetail from "./pages/default/admin/credentials/RequestDetail"
 
 const App = () => {
   return (
@@ -36,6 +38,8 @@ const App = () => {
 
         <Route path='/registrar/admin/credentials' element={<Credential />} />
         <Route path='/registrar/admin/credentials/purposes' element={<Purpose />} />
+        <Route path='/registrar/admin/credentials/requests' element={<Request />} />
+        <Route path='/registrar/admin/credentials/requests/:request_number' element={<RequestDetail />} />
 
       </Route>
 

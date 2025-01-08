@@ -183,7 +183,9 @@ const NavigationList = ({ user, route, navigate, logout }) => {
                 </ListItemPrefix>
                 <span className="mr-auto text-sm font-normal">Purposes</span>
               </ListItem>
-              <ListItem>
+              <ListItem onClick={() => {
+                navigate('/registrar/admin/credentials/requests')
+              }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/requests' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                 </ListItemPrefix>
