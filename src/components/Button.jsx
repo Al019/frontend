@@ -1,8 +1,8 @@
 import { Button } from "@material-tailwind/react"
 
-const Btn = ({ label, onClick, icon, loading, ...rest }) => {
+const Btn = ({ label, onClick, icon, loading, className, ...rest }) => {
   return (
-    <Button onClick={onClick} loading={loading} {...rest} className="flex items-center justify-center gap-3">
+    <Button onClick={onClick} loading={loading} {...rest} className={`flex items-center justify-center gap-3 ${className}`}>
       {icon && (
         <div className={`${loading ? 'hidden' : ''}`}>
           {icon}

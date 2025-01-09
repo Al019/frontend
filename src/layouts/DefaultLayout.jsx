@@ -2,7 +2,7 @@ import { Accordion, AccordionBody, AccordionHeader, Badge, Breadcrumbs, Card, Ic
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom"
 import Logo from '../assets/images/occ-logo.png'
 import { useState } from "react"
-import { ChevronDownIcon, ChevronRightIcon, DocumentTextIcon, FolderIcon, PresentationChartLineIcon, UsersIcon } from "@heroicons/react/24/outline"
+import { ArrowsUpDownIcon, ChevronDownIcon, ChevronRightIcon, DocumentTextIcon, FolderIcon, PresentationChartLineIcon, UsersIcon } from "@heroicons/react/24/outline"
 import User from '../assets/images/user.png'
 import { BellIcon } from "@heroicons/react/24/solid"
 import { HomeIcon } from "@heroicons/react/24/solid"
@@ -99,107 +99,153 @@ const NavigationList = ({ user, route, navigate, logout }) => {
           </AccordionBody>
         </Accordion>
         <hr className="m-2 border-blue-gray-50" />
-        <span className="font-medium text-sm py-2">Main</span>
-        <ListItem onClick={() => {
-          navigate('/registrar/admin/dashboard')
-        }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/dashboard' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-          <ListItemPrefix>
-            <PresentationChartLineIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          <span className="mr-auto text-sm font-normal">Dashboard</span>
-        </ListItem>
-        <span className="font-medium text-sm py-2">Users</span>
-        <ListItem onClick={() => {
-          navigate('/registrar/admin/students')
-        }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/students' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-          <ListItemPrefix>
-            <UsersIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          <span className="mr-auto text-sm font-normal">Students</span>
-        </ListItem>
-        <ListItem onClick={() => {
-          navigate('/registrar/admin/staffs')
-        }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/staffs' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-          <ListItemPrefix>
-            <UsersIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          <span className="mr-auto text-sm font-normal">Staffs</span>
-        </ListItem>
-        <span className="font-medium text-sm py-2">Files</span>
-        <Accordion open={open === 2} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >
-          <ListItem className="p-0">
-            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+        {user?.role === 'admin' && (
+          <>
+            <span className="font-medium text-sm py-2">Main</span>
+            <ListItem onClick={() => {
+              navigate('/registrar/admin/dashboard')
+            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/dashboard' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
               <ListItemPrefix>
-                <FolderIcon className="h-5 w-5" />
+                <PresentationChartLineIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <span className="mr-auto text-sm font-normal">Documents</span>
-            </AccordionHeader>
-          </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem onClick={() => {
-                navigate('/registrar/admin/documents')
-              }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/documents' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
-                </ListItemPrefix>
-                <span className="mr-auto text-sm font-normal">All Documents</span>
-              </ListItem>
-              <ListItem onClick={() => {
-                navigate('/registrar/admin/documents/records')
-              }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/documents/records' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
-                </ListItemPrefix>
-                <span className="mr-auto text-sm font-normal">Records</span>
-              </ListItem>
-            </List>
-          </AccordionBody>
-        </Accordion>
-        <Accordion open={open === 3} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`} />} >
-          <ListItem className="p-0">
-            <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
+              <span className="mr-auto text-sm font-normal">Dashboard</span>
+            </ListItem>
+            <span className="font-medium text-sm py-2">Users</span>
+            <ListItem onClick={() => {
+              navigate('/registrar/admin/students')
+            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/students' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
               <ListItemPrefix>
-                <DocumentTextIcon className="h-5 w-5" />
+                <UsersIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <span className="mr-auto text-sm font-normal">Credentials</span>
-            </AccordionHeader>
-          </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem onClick={() => {
-                navigate('/registrar/admin/credentials')
-              }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
-                </ListItemPrefix>
-                <span className="mr-auto text-sm font-normal">All Credentials</span>
+              <span className="mr-auto text-sm font-normal">Students</span>
+            </ListItem>
+            <ListItem onClick={() => {
+              navigate('/registrar/admin/staffs')
+            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/staffs' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+              <ListItemPrefix>
+                <UsersIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <span className="mr-auto text-sm font-normal">Staffs</span>
+            </ListItem>
+            <span className="font-medium text-sm py-2">Files</span>
+            <Accordion open={open === 2} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >
+              <ListItem className="p-0">
+                <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+                  <ListItemPrefix>
+                    <FolderIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <span className="mr-auto text-sm font-normal">Documents</span>
+                </AccordionHeader>
               </ListItem>
-              <ListItem onClick={() => {
-                navigate('/registrar/admin/credentials/purposes')
-              }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/purposes' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
-                </ListItemPrefix>
-                <span className="mr-auto text-sm font-normal">Purposes</span>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem onClick={() => {
+                    navigate('/registrar/admin/documents')
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/documents' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">All Documents</span>
+                  </ListItem>
+                  <ListItem onClick={() => {
+                    navigate('/registrar/admin/documents/records')
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/documents/records' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">Records</span>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion open={open === 3} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`} />} >
+              <ListItem className="p-0">
+                <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
+                  <ListItemPrefix>
+                    <DocumentTextIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <span className="mr-auto text-sm font-normal">Credentials</span>
+                </AccordionHeader>
               </ListItem>
-              <ListItem onClick={() => {
-                navigate('/registrar/admin/credentials/requests')
-              }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/requests' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
-                </ListItemPrefix>
-                <span className="mr-auto text-sm font-normal">Requests</span>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem onClick={() => {
+                    navigate('/registrar/admin/credentials')
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">All Credentials</span>
+                  </ListItem>
+                  <ListItem onClick={() => {
+                    navigate('/registrar/admin/credentials/purposes')
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/purposes' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">Purposes</span>
+                  </ListItem>
+                  <ListItem onClick={() => {
+                    navigate('/registrar/admin/credentials/requests')
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/requests' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">Requests</span>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">Reports</span>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+          </>
+        )}
+        {user?.role === 'cashier' && (
+          <>
+            <span className="font-medium text-sm py-2">Main</span>
+            <ListItem onClick={() => {
+              navigate('/registrar/cashier/dashboard')
+            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/cashier/dashboard' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+              <ListItemPrefix>
+                <PresentationChartLineIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <span className="mr-auto text-sm font-normal">Dashboard</span>
+            </ListItem>
+            <span className="font-medium text-sm py-2">Credentials</span>
+            <Accordion open={open === 2} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >
+              <ListItem className="p-0">
+                <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+                  <ListItemPrefix>
+                    <ArrowsUpDownIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <span className="mr-auto text-sm font-normal">Requests</span>
+                </AccordionHeader>
               </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
-                </ListItemPrefix>
-                <span className="mr-auto text-sm font-normal">Reports</span>
-              </ListItem>
-            </List>
-          </AccordionBody>
-        </Accordion>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem onClick={() => {
+                    navigate('/registrar/cashier/credentials/requests')
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/cashier/credentials/requests' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">All Requests</span>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
+                    </ListItemPrefix>
+                    <span className="mr-auto text-sm font-normal">Reports</span>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+          </>
+        )}
       </List>
     </>
   )

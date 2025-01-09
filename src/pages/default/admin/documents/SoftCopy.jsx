@@ -14,7 +14,7 @@ import LoadingScreen from '../../../../components/LoadingScreen'
 
 const reasons = ['Photocopy', 'Inconsistent entries', 'Others']
 
-const url = "http://192.168.12.197:8000/"
+const url = "http://192.168.0.101:8000/"
 
 const SoftCopy = () => {
   const { id_number, document_id } = useParams()

@@ -9,6 +9,10 @@ const AuthLayout = () => {
   if (token) {
     if (user?.role === 'admin') {
       return <Navigate to='/registrar/admin/dashboard' />
+    } else if (user?.role === 'staff') {
+      return <Navigate to='/registrar/staff/dashboard' />
+    } else if (user?.role === 'cashier') {
+      return <Navigate to='/registrar/cashier/dashboard' />
     }
   }
 
