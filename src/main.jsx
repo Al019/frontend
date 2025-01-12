@@ -7,10 +7,10 @@ import { AuthContext } from './contexts/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthContext>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthContext>
         <App />
-      </BrowserRouter>
-    </AuthContext>
+      </AuthContext>
+    </BrowserRouter>
   </StrictMode>,
 )

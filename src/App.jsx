@@ -17,9 +17,13 @@ import CashierDashboard from "./pages/default/cashier/dashboard/Dashboard"
 import { useAuthContext } from "./contexts/AuthContext"
 import CashierRequest from "./pages/default/cashier/credentials/Request"
 import CashierRequestDetail from "./pages/default/cashier/credentials/RequestDetail"
+import ForgotPassword from "./pages/auth/ForgotPassword"
+import EmailVerification from "./pages/auth/EmailVerification"
+import CreateNewPassword from "./pages/auth/CreateNewPassword"
+import Information from "./pages/default/admin/students/Information"
 
 const App = () => {
-  const { token, user } = useAuthContext()
+  const { token, user, email_address, otp } = useAuthContext()
 
   return (
     <Routes>
@@ -27,37 +31,49 @@ const App = () => {
       <Route path='/' element={<AuthLayout />}>
         <Route path='/' element={<Navigate to='/login' />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        {email_address && (
+          <Route path='/email-verification' element={<EmailVerification />} />
+        )}
+        {otp && (
+          <Route path='/create-new-password' element={<CreateNewPassword />} />
+        )}
       </Route>
 
       {token ? (
         <Route path='/' element={<DefaultLayout />}>
 
-          {user?.role === 'admin' && (
+          {(user?.role === 'admin' || user?.role === 'staff') && (
             <>
-              <Route path='/registrar/admin/dashboard' element={<AdminDashboard />} />
+              <Route path={`/registrar/${user?.role}/dashboard`} element={<AdminDashboard />} />
 
-              <Route path='/registrar/admin/students' element={<Student />} />
+              {user?.role === 'admin' && (
+                <>
+                  <Route path={`/registrar/${user?.role}/students`} element={<Student />} />
+                  <Route path={`/registrar/${user?.role}/students/:id_number`} element={<Information />} />
 
-              <Route path='/registrar/admin/staffs' element={<Staff />} />
+                  <Route path={`/registrar/${user?.role}/staffs`} element={<Staff />} />
+                </>
+              )}
 
-              <Route path='/registrar/admin/documents' element={<Document />} />
-              <Route path='/registrar/admin/documents/records' element={<Record />} />
-              <Route path='/registrar/admin/documents/records/:id_number' element={<Requirement />} />
-              <Route path='/registrar/admin/documents/records/:id_number/:document_id' element={<SoftCopy />} />
+              <Route path={`/registrar/${user?.role}/documents`} element={<Document />} />
+              <Route path={`/registrar/${user?.role}/documents/records`} element={<Record />} />
+              <Route path={`/registrar/${user?.role}/documents/records/:id_number`} element={<Requirement />} />
+              <Route path={`/registrar/${user?.role}/documents/records/:id_number/:document_id`} element={<SoftCopy />} />
 
-              <Route path='/registrar/admin/credentials' element={<Credential />} />
-              <Route path='/registrar/admin/credentials/purposes' element={<Purpose />} />
-              <Route path='/registrar/admin/credentials/requests' element={<AdminRequest />} />
-              <Route path='/registrar/admin/credentials/requests/:request_number' element={<AdminRequestDetail />} />
+              <Route path={`/registrar/${user?.role}/credentials`} element={<Credential />} />
+              <Route path={`/registrar/${user?.role}/credentials/purposes`} element={<Purpose />} />
+              <Route path={`/registrar/${user?.role}/credentials/requests`} element={<AdminRequest />} />
+              <Route path={`/registrar/${user?.role}/credentials/requests/:request_number`} element={<AdminRequestDetail />} />
             </>
           )}
 
           {user?.role === 'cashier' && (
             <>
-              <Route path='/registrar/cashier/dashboard' element={<CashierDashboard />} />
+              <Route path={`/registrar/${user?.role}/dashboard`} element={<CashierDashboard />} />
 
-              <Route path='/registrar/cashier/credentials/requests' element={<CashierRequest />} />
-              <Route path='/registrar/cashier/credentials/requests/:request_number' element={<CashierRequestDetail />} />
+              <Route path={`/registrar/${user?.role}/credentials/requests`} element={<CashierRequest />} />
+              <Route path={`/registrar/${user?.role}/credentials/requests/:request_number`} element={<CashierRequestDetail />} />
             </>
           )}
 

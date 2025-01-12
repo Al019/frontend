@@ -208,7 +208,7 @@ const RequestDetail = () => {
               setOpen(!open)
             }} size="sm" color='blue' />
           )}
-          {(request.request_status === 'receive' && request.request_credential.request_credential_status === 'claim') && (
+          {(request.request_status === 'receive' && request.request_credential.reqcred_status === 'claim') && (
             <Btn label="Release" onClick={() => {
               setDialog('release')
               setOpen(!open)

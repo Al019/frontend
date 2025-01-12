@@ -1,4 +1,4 @@
-import { Badge, Tab, Tabs, TabsHeader } from "@material-tailwind/react"
+import { Badge, Option, Select, Tab, Tabs, TabsHeader } from "@material-tailwind/react"
 import Tbl from "../../../../components/Table"
 import { useEffect, useState } from "react"
 import axios from "../../../../api/axios"
@@ -14,11 +14,12 @@ const Request = () => {
   const formatDate = (date) => new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
   const [count, setCount] = useState({})
   const navigate = useNavigate()
+  const [selected, setSelected] = useState("all")
 
   useEffect(() => {
     const getRequest = async () => {
       await axios.get('/admin/get-credential-request', {
-        params: { status }
+        params: { status, selected }
       })
         .then(({ data }) => {
           const formattedRequests = data.requests.map((request) => ({
@@ -36,7 +37,7 @@ const Request = () => {
         })
     }
     getRequest()
-  }, [status])
+  }, [status, selected])
 
   const data = {
     theads: [
@@ -69,6 +70,15 @@ const Request = () => {
           ))}
         </TabsHeader>
       </Tabs>
+      {status === 'pay' && (
+        <div className="w-fit">
+          <Select value={selected} onChange={(val) => setSelected(val)} label="Select Status" color="blue">
+            <Option value="all">All</Option>
+            <Option value="pending">Pending</Option>
+            <Option value="paid">Paid</Option>
+          </Select>
+        </div>
+      )}
       <Tbl title="Requests" data={data} idKey="request_number" onClickView={handleNavigate} />
     </div>
   )

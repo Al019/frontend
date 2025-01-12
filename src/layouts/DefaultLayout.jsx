@@ -99,34 +99,38 @@ const NavigationList = ({ user, route, navigate, logout }) => {
           </AccordionBody>
         </Accordion>
         <hr className="m-2 border-blue-gray-50" />
-        {user?.role === 'admin' && (
+        {(user?.role === 'admin' || user?.role === 'staff') && (
           <>
             <span className="font-medium text-sm py-2">Main</span>
             <ListItem onClick={() => {
-              navigate('/registrar/admin/dashboard')
-            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/dashboard' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+              navigate(`/registrar/${user?.role}/dashboard`)
+            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/dashboard` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
               <ListItemPrefix>
                 <PresentationChartLineIcon className="h-5 w-5" />
               </ListItemPrefix>
               <span className="mr-auto text-sm font-normal">Dashboard</span>
             </ListItem>
-            <span className="font-medium text-sm py-2">Users</span>
-            <ListItem onClick={() => {
-              navigate('/registrar/admin/students')
-            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/students' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-              <ListItemPrefix>
-                <UsersIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <span className="mr-auto text-sm font-normal">Students</span>
-            </ListItem>
-            <ListItem onClick={() => {
-              navigate('/registrar/admin/staffs')
-            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/staffs' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
-              <ListItemPrefix>
-                <UsersIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <span className="mr-auto text-sm font-normal">Staffs</span>
-            </ListItem>
+            {user?.role === 'admin' && (
+              <>
+                <span className="font-medium text-sm py-2">Users</span>
+                <ListItem onClick={() => {
+                  navigate(`/registrar/${user?.role}/students`)
+                }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/students` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                  <ListItemPrefix>
+                    <UsersIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <span className="mr-auto text-sm font-normal">Students</span>
+                </ListItem>
+                <ListItem onClick={() => {
+                  navigate(`/registrar/${user?.role}/staffs`)
+                }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/staffs` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                  <ListItemPrefix>
+                    <UsersIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <span className="mr-auto text-sm font-normal">Staffs</span>
+                </ListItem>
+              </>
+            )}
             <span className="font-medium text-sm py-2">Files</span>
             <Accordion open={open === 2} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >
               <ListItem className="p-0">
@@ -140,16 +144,16 @@ const NavigationList = ({ user, route, navigate, logout }) => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem onClick={() => {
-                    navigate('/registrar/admin/documents')
-                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/documents' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    navigate(`/registrar/${user?.role}/documents`)
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/documents` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                     </ListItemPrefix>
                     <span className="mr-auto text-sm font-normal">All Documents</span>
                   </ListItem>
                   <ListItem onClick={() => {
-                    navigate('/registrar/admin/documents/records')
-                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/documents/records' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    navigate(`/registrar/${user?.role}/documents/records`)
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/documents/records` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                     </ListItemPrefix>
@@ -170,24 +174,24 @@ const NavigationList = ({ user, route, navigate, logout }) => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem onClick={() => {
-                    navigate('/registrar/admin/credentials')
-                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    navigate(`/registrar/${user?.role}/credentials`)
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/credentials` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                     </ListItemPrefix>
                     <span className="mr-auto text-sm font-normal">All Credentials</span>
                   </ListItem>
                   <ListItem onClick={() => {
-                    navigate('/registrar/admin/credentials/purposes')
-                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/purposes' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    navigate(`/registrar/${user?.role}/credentials/purposes`)
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/credentials/purposes` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                     </ListItemPrefix>
                     <span className="mr-auto text-sm font-normal">Purposes</span>
                   </ListItem>
                   <ListItem onClick={() => {
-                    navigate('/registrar/admin/credentials/requests')
-                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/admin/credentials/requests' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    navigate(`/registrar/${user?.role}/credentials/requests`)
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/credentials/requests` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                     </ListItemPrefix>
@@ -208,8 +212,8 @@ const NavigationList = ({ user, route, navigate, logout }) => {
           <>
             <span className="font-medium text-sm py-2">Main</span>
             <ListItem onClick={() => {
-              navigate('/registrar/cashier/dashboard')
-            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/cashier/dashboard' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+              navigate(`/registrar/${user?.role}/dashboard`)
+            }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/dashboard` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
               <ListItemPrefix>
                 <PresentationChartLineIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -228,8 +232,8 @@ const NavigationList = ({ user, route, navigate, logout }) => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem onClick={() => {
-                    navigate('/registrar/cashier/credentials/requests')
-                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === '/registrar/cashier/credentials/requests' && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
+                    navigate(`/registrar/${user?.role}/credentials/requests`)
+                  }} className={`focus:bg-blue-500 focus:text-white ${route.pathname === `/registrar/${user?.role}/credentials/requests` && 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white'}`}>
                     <ListItemPrefix>
                       <ChevronRightIcon strokeWidth={2.5} className="h-3.5 w-3.5" />
                     </ListItemPrefix>

@@ -9,6 +9,9 @@ export const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
   const [btnLoading, setBtnLoading] = useState(false)
+  const [email_address, setEmailAddress] = useState("")
+  const [otp, setOtp] = useState("")
+  const navigate = useNavigate()
 
   const setToken = (token) => {
     _setToken(token)
@@ -51,6 +54,43 @@ export const AuthContext = ({ children }) => {
       })
   }
 
+  const forgotPassword = async ({ ...data }) => {
+    setBtnLoading(true)
+    await axios.post('/forgot-password', data)
+      .then(() => {
+        setEmailAddress(data.staff_email_address)
+        navigate('/email-verification')
+      })
+      .finally(() => {
+        setBtnLoading(false)
+      })
+  }
+
+  const verifyOtp = async ({ ...data }) => {
+    setBtnLoading(true)
+    await axios.post('/verify-otp', data)
+      .then(() => {
+        setOtp(data.otp)
+        navigate('/create-new-password')
+      })
+      .finally(() => {
+        setBtnLoading(false)
+      })
+  }
+
+  const createNewPassword = async ({ ...data }) => {
+    setBtnLoading(true)
+    await axios.post("/create-new-password", data)
+      .then(() => {
+        setEmailAddress("")
+        setOtp("")
+        navigate('/login')
+      })
+      .finally(() => {
+        setBtnLoading(false)
+      })
+  }
+
   const logout = async () => {
     setLoading(true)
     await axios.get('/logout')
@@ -64,7 +104,7 @@ export const AuthContext = ({ children }) => {
   }
 
   return (
-    <auth.Provider value={{ token, user, loading, btnLoading, login, logout }}>
+    <auth.Provider value={{ token, user, loading, btnLoading, email_address, otp, login, forgotPassword, verifyOtp, createNewPassword, logout }}>
       {children}
     </auth.Provider>
   )
